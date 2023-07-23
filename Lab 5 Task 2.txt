@@ -1,0 +1,92 @@
+﻿CREATE TABLE Department (
+  Dept_ID INT PRIMARY KEY,
+  Dept_Name VARCHAR(50),
+  Building VARCHAR(50)
+);
+
+
+CREATE TABLE Instructor (
+  Instructor_ID INT PRIMARY KEY,
+  Name VARCHAR(50),
+  Dept_ID INT,
+  Course_ID INT,
+  FOREIGN KEY (Dept_ID) REFERENCES Department(Dept_ID),
+  FOREIGN KEY (Course_ID) REFERENCES Course(Course_ID)
+);
+
+
+CREATE TABLE Course (
+  Course_ID INT PRIMARY KEY,
+  Name VARCHAR(50),
+  Credit INT
+);
+
+
+CREATE TABLE Student (
+  Student_ID INT PRIMARY KEY,
+  Name VARCHAR(50),
+  Dept_ID INT,
+  FOREIGN KEY (Dept_ID) REFERENCES Department(Dept_ID)
+);
+
+
+CREATE TABLE CourseStudent (
+  Course_ID INT,
+  Student_ID INT,
+  FOREIGN KEY (Course_ID) REFERENCES Course(Course_ID),
+  FOREIGN KEY (Student_ID) REFERENCES Student(Student_ID),
+  PRIMARY KEY (Course_ID, Student_ID)
+);
+
+
+CREATE TABLE DepartmentCourse (
+  Dept_ID INT,
+  Course_ID INT,
+  FOREIGN KEY (Dept_ID) REFERENCES Department(Dept_ID),
+  FOREIGN KEY (Course_ID) REFERENCES Course(Course_ID),
+  PRIMARY KEY (Dept_ID, Course_ID)
+);
+
+
+
+
+CREATE TABLE Employees (
+  Emp_ID INT PRIMARY KEY,
+  Name VARCHAR(50),
+  Age INT,
+  Phone VARCHAR(11)
+);
+
+
+CREATE TABLE Customer (
+  Customer_ID INT PRIMARY KEY,
+  Name VARCHAR(50),
+  Age INT,
+  Emp_ID INT,
+  FOREIGN KEY (Emp_ID) REFERENCES Employees(Emp_ID)
+);
+
+
+CREATE TABLE Product (
+  Product_ID INT PRIMARY KEY,
+  Name VARCHAR(50),
+  Price INT
+);
+
+
+CREATE TABLE CustomerProduct (
+  Customer_ID INT,
+  Product_ID INT,
+  FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID),
+  FOREIGN KEY (Product_ID) REFERENCES Product(Product_ID),
+  PRIMARY KEY (Customer_ID, Product_ID)
+);
+
+
+CREATE TABLE EmployeesProduct (
+  Emp_ID INT,
+  Product_ID INT,
+  FOREIGN KEY (Emp_ID) REFERENCES Employees(Emp_ID),
+  FOREIGN KEY (Product_ID) REFERENCES Product(Product_ID),
+  PRIMARY KEY (Emp_ID, Product_ID)
+);

@@ -1,0 +1,567 @@
+﻿SQL*Plus: Release 19.0.0.0.0 - Production on Tue Jun 20 14:42:33 2023
+Version 19.3.0.0.0
+
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Enter user-name: system
+Enter password:
+Last Successful login time: Mon Jun 19 2023 14:56:59 +06:00
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+
+SQL> SET PAGESIZE 100;
+SQL>
+SQL> DROP TABLE CITIZEN;
+
+
+Table dropped.
+
+
+SQL>
+SQL> CREATE TABLE CITIZEN (
+  2  C_ID NUMBER (3),
+  3  C_NAME VARCHAR2 (10),
+  4  C_HOME VARCHAR2 (10),
+  5  AGE NUMBER (2),
+  6  OCCUPATION VARCHAR2 (15),
+  7  GENDER VARCHAR2 (6),
+  8  SALARY NUMBER,
+  9  CONSTRAINTS PK_CITIZEN PRIMARY KEY (C_ID)
+ 10  );
+
+
+Table created.
+
+
+SQL>
+SQL>
+SQL> INSERT INTO CITIZEN VALUES (1, 'Alice', 'Dhaka', 25, 'Teacher', 'Male', 50000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (2, 'Bob', 'Dhaka', 56, 'Service', 'Male', 60000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (3, 'Charlie', 'Ctg', 71, 'Retired', 'Male', 10000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (4, 'Erin', 'Ctg', 13, 'Student', 'Female', 500);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (5, 'Dave', 'Dhaka', 45, 'Service', 'Male', 40000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (6, 'Faythe', 'Gazipur', 54, 'Doctor', 'Female', 55000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (7, 'Grace', 'Gazipur', 65, 'Musician', 'Female', 5000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (8, 'Ivan', 'Dhaka', 56, 'Engineer', 'Male', 60000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (9, 'Frank', 'Ctg', 23, 'Student', 'Male', 1000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (10, 'Micheal', 'Comilla', 32, 'Teacher', 'Male', 45000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (11, 'Niaj', 'Comilla', 51, 'Farmer', 'Male', 20000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (12, 'Heidi', 'Khulna', 15, 'Student', 'Female', 1500);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (13, 'Ted', 'Ctg', 25, 'Business', 'Male', 100000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (14, 'Walter', 'Comilla', 52, 'Doctor', 'Male', 70000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (15, 'Victor', 'Gazipur', 53, 'Teacher', 'Male', 50000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (16, 'Judy', 'Dhaka', 35, 'Musician', 'Female', 50000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (17, 'Pat', 'Khulna', 43, 'Service', 'Male', 50000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (18, 'Olivia', 'Khulna', 34, 'Service', 'Female', 45000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (19, 'Trent', 'Ctg', 16, 'Student', 'Male', 500);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (20, 'Peggy', 'Comilla', 32, 'Business', 'Female', 120000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (21, 'Wendy', 'Ctg', 25, 'Musician', 'Female', 100000);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (22, 'Oscar', 'Gazipur', 14, 'Student', 'Male', NULL);
+
+
+1 row created.
+
+
+SQL> INSERT INTO CITIZEN VALUES (23, 'Mallet', 'Dhaka', 25, 'Engineer', 'Male', 50000);
+
+
+1 row created.
+
+
+SQL>
+SQL> SELECT C_Home, COUNT(*)
+  2  FROM Citizen
+  3  WHERE Occupation = 'Doctor'
+  4
+SQL>
+SQL> SELECT C_Home, COUNT(*)
+  2  FROM Citizen
+  3  WHERE Occupation = 'Doctor'
+  4
+SQL> SELECT C_Home, COUNT(*)
+  2  FROM Citizen
+  3  WHERE Occupation = 'Doctor';
+SELECT C_Home, COUNT(*)
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+
+
+SQL> SELECT C_Home, COUNT(*)
+  2  FROM Citizen
+  3  WHERE Occupation = 'Doctor'
+  4  GROUP BY C_Home;
+
+
+C_HOME       COUNT(*)
+---------- ----------
+Gazipur             1
+Comilla             1
+
+
+SQL> SELECT C_Home AS District, COUNT(*) AS Doctor_Count
+  2  FROM Citizen
+  3  WHERE Occupation = 'Doctor'
+  4  GROUP BY C_Home;
+
+
+DISTRICT   DOCTOR_COUNT
+---------- ------------
+Gazipur               1
+Comilla               1
+
+
+SQL> SELECT Occupation, AVG(Salary) AS AvgSalary
+  2  FROM Citizen
+  3  GROUP BY Occupation
+  4  HAVING AVG(Salary) > 45000;
+
+
+OCCUPATION       AVGSALARY
+--------------- ----------
+Doctor               62500
+Business            110000
+Teacher         48333.3333
+Service              48750
+Engineer             55000
+Musician        51666.6667
+
+
+6 rows selected.
+
+
+SQL> SELECT C_Home AS District, COUNT(*) AS Population
+  2  FROM Citizen
+  3  GROUP BY C_Home
+  4  HAVING COUNT(*) >= 4;
+
+
+DISTRICT   POPULATION
+---------- ----------
+Gazipur             4
+Ctg                 6
+Comilla             4
+Dhaka               6
+
+
+SQL> SELECT
+  2    C_Home AS DistrictName,
+  3    (SELECT AVG(Salary) FROM Citizen WHERE C_Home = DistrictName) AS AvgEarning
+  4  FROM
+  5    Citizen
+  6  GROUP BY
+  7    C_Home;
+  (SELECT AVG(Salary) FROM Citizen WHERE C_Home = DistrictName) AS AvgEarning
+                                                  *
+ERROR at line 3:
+ORA-00904: "DISTRICTNAME": invalid identifier
+
+
+
+
+SQL> SELECT C_Home AS District, AVG(Salary) AS AverageEarning
+  2  FROM Citizen
+  3  GROUP BY C_Home;
+
+
+DISTRICT   AVERAGEEARNING
+---------- --------------
+Gazipur        36666.6667
+Ctg            35333.3333
+Comilla             63750
+Dhaka          51666.6667
+Khulna         32166.6667
+
+
+SQL> SELECT C_Name, Occupation
+  2  FROM Citizen
+  3  WHERE Salary = (SELECT MAX(Salary) FROM Citizen);
+
+
+C_NAME     OCCUPATION
+---------- ---------------
+Peggy      Business
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3  WHERE Gender = 'Female'(SELECT MIN(Salary) FROM Citizen);
+WHERE Gender = 'Female'(SELECT MIN(Salary) FROM Citizen)
+                       *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended
+
+
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3  WHERE Gender = 'Female'
+  4  ORDER BY Salary ASC
+  5  LIMIT 1;
+LIMIT 1
+*
+ERROR at line 5:
+ORA-00933: SQL command not properly ended
+
+
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3  WHERE Gender = 'Female'
+  4  ORDER BY Salary ASC
+  5  ;
+
+
+C_NAME
+----------
+Erin
+Heidi
+Grace
+Olivia
+Judy
+Faythe
+Wendy
+Peggy
+
+
+8 rows selected.
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3  WHERE Gender = 'Female'
+  4  ORDER BY Salary ASC
+  5  ;
+
+
+C_NAME
+----------
+Erin
+Heidi
+Grace
+Olivia
+Judy
+Faythe
+Wendy
+Peggy
+
+
+8 rows selected.
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3  WHERE Gender = 'Female'
+  4  ORDER BY Salary ASC
+  5  Fetch first 1 rows only;
+
+
+C_NAME
+----------
+Erin
+
+
+SQL> SELECT TOP 1 Age
+  2  FROM Citizen
+  3  WHERE Occupation = 'Doctor'
+  4  ORDER BY Salary DESC
+  5  ;
+SELECT TOP 1 Age
+           *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+
+
+SQL> SELECT Age
+  2  FROM Citizen
+  3  WHERE Occupation = 'Doctor'
+  4  ORDER BY Salary DESC
+  5  Fetch first 1 rows only;
+
+
+       AGE
+----------
+        52
+
+
+SQL> SELECT Occupation
+  2  FROM Citizen
+  3  GROUP BY Occupation
+  4  ORDER BY AVG(Salary) DESC
+  5  Fetch first 1 rows only;
+
+
+OCCUPATION
+---------------
+Business
+
+
+SQL> SELECT Occupation AS PopularOccupation
+  2  FROM Citizen
+  3  WHERE Age BETWEEN 25 AND 50
+  4  GROUP BY Occupation
+  5  ORDER BY COUNT(*) DESC
+  6  Fetch first 1 rows only;
+
+
+POPULAROCCUPATI
+---------------
+Service
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3  WHERE Salary < (SELECT AVG(Salary) FROM Citizen);
+
+
+C_NAME
+----------
+Charlie
+Erin
+Dave
+Grace
+Frank
+Niaj
+Heidi
+Trent
+
+
+8 rows selected.
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3  ORDER BY Salary DESC
+  4  Fetch first 3 rows only;
+
+
+C_NAME
+----------
+Oscar
+Peggy
+Ted
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3  WHERE Salary =
+  4    (SELECT (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male') -
+  5     (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female')) AS Salary_Difference;
+   (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female')) AS Salary_Difference
+                                                            *
+ERROR at line 5:
+ORA-00923: FROM keyword not found where expected
+
+
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3  WHERE Salary =
+  4    (SELECT (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male') -
+  5     (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female') AS Salary_Difference;
+  (SELECT (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male') -
+   *
+ERROR at line 4:
+ORA-00921: unexpected end of SQL command
+
+
+
+
+SQL> SELECT
+  2    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male') -
+  3    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female') AS Salary_Difference;
+  (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female') AS Salary_Difference
+                                                                               *
+ERROR at line 3:
+ORA-00923: FROM keyword not found where expected
+
+
+
+
+SQL> SELECT
+  2    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male') -
+  3    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female') AS Salary_Difference;
+  (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female') AS Salary_Difference
+                                                                               *
+ERROR at line 3:
+ORA-00923: FROM keyword not found where expected
+
+
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male') -
+  4    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female') AS Salary_Difference;
+  (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male') -
+   *
+ERROR at line 3:
+ORA-00936: missing expression
+
+
+
+
+SQL> SELECT
+  2    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male') -
+  3    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female') AS Salary_Difference;
+  (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female') AS Salary_Difference
+                                                                               *
+ERROR at line 3:
+ORA-00923: FROM keyword not found where expected
+
+
+
+
+SQL> SELECT C_Name
+  2  FROM Citizen
+  3    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male' as M.Salary) -
+  4    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female' as F.Salary);
+  (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male' as M.Salary) -
+   *
+ERROR at line 3:
+ORA-00936: missing expression
+
+
+
+
+SQL> SELECT C_Name
+  2    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male' as M.Salary) -
+  3    (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Female' as F.Salary);
+  (SELECT AVG(Salary) FROM Citizen WHERE Gender = 'Male' as M.Salary) -
+   *
+ERROR at line 2:
+ORA-00936: missing expression
+
+
+
+
+SQL> SELECT A.M- B.F
+  2  FROM
+  3  (SELECT AVG(Salary) AS M FROM Citizen WHERE Gender = 'Male') A,
+  4  (SELECT AVG(Salary)  AS F FROM Citizen WHERE Gender = 'Female') B;
+
+
+   A.M-B.F
+----------
+-3803.5714
+
+
+SQL>

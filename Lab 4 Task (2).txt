@@ -1,0 +1,77 @@
+﻿SELECT ('Actor' || ': '|| ACT_FIRSTNAME || ACT_LASTNAME)
+From Actor
+Union 
+SELECT ('Director' || ' : '|| DIR_FIRSTNAME || DIR_LASTNAME)
+From Director
+Union
+SELECT ('Reviewer' || ' : '|| REV_Name)
+From Reviewer;
+
+
+
+
+SELECT MOV_TITLE
+FROM MOVIE
+WHERE MOV_ID NOT IN (SELECT DISTINCT MOV_id FROM RATING);
+
+
+SELECT MOVIE.MOV_TITLE
+FROM MOVIE,ACTOR,DIRECTOR,CASTS,DIRECTION
+WHERE MOVIE.MOV_ID=CASTS.MOV_ID AND
+MOVIE.MOV_ID=DIRECTION.MOV_ID AND
+ACTOR.ACT_ID=CASTS.ACT_ID AND
+DIRECTION.DIR_ID=DIRECTOR.DIR_ID AND DIRECTOR.DIR_FIRSTNAME != ACTOR.ACT_FIRSTNAME AND  DIRECTOR.DIR_LASTNAME != ACTOR.ACT_LASTNAME;
+
+
+
+
+
+
+
+
+SELECT m.MOV_title, MAX(rev_stars) AS max_rating, AVG(rev_stars) AS avg_rating
+FROM movie m
+LEFT JOIN RATING r ON m.mov_id = r.mov_id
+GROUP BY m.mov_id, m.MOV_TITLE
+ORDER BY avg_rating DESC;
+
+
+
+
+
+
+
+
+
+
+SELECT mov_title
+FROM movie
+WHERE (SELECT AVG(rev_stars) FROM rating) > (SELECT AVG(rev_stars) FROM rating WHERE mov_id = movie.mov_id);
+
+
+
+
+
+
+
+
+SELECT actor.act_id AS actor_name, COUNT(rev_stars) AS number_of_ratings
+FROM actor
+INNER JOIN casts ON actor.act_id = casts.act_id
+INNER JOIN movie ON movie.mov_id = casts.mov_id
+INNER JOIN rating ON movie.mov_id = rating.mov_id
+GROUP BY actor.act_id;
+
+
+
+
+
+
+SELECT director.dir_id AS director_name, AVG(rating.rev_stars) AS avg_rating
+FROM director
+INNER JOIN direction ON direction.dir_id = director.dir_id
+INNER JOIN movie on direction.mov_id = movie.mov_id
+LEFT JOIN rating ON rating.mov_id = movie.mov_id
+GROUP BY director.dir_id
+ORDER BY avg_rating DESC
+OFFSET 2 ROWS FETCH NEXT 3 ROWS ONLY;

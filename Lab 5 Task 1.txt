@@ -1,0 +1,44 @@
+﻿Instructor 
+Id 
+Name 
+1....1 
+1....1 0....M 
+Teaching 
+0....M
+0....M 
+Course 
+Id 
+Name 
+Credit 
+M....M 
+Faculty Enroll Relationship 
+0...M 
+Department 
+Dept_id 
+0....M 1....1 
+M...M 
+Student_id 
+Students 
+Dept_name Building 
+Admit 
+Student_name DOB 
+Exployees 
+Id 
+Name 
+Age 
+Phone no 
+0...M 
+Manage 
+1...M 0...1 
+Service 
+0...M 0...M 
+Products 
+Id 
+Name 
+Price 
+Customer 
+Id 
+Name 
+Age 
+0...M
+Buy

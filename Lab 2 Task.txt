@@ -1,0 +1,172 @@
+﻿-----------------------------Task 1------------------------
+
+
+
+
+
+
+CREATE USER USER1137 IDENTIFIED BY iutcse;
+
+
+GRANT CREATE SESSION, RESOURCE, UULIMITED TABLESPACE TO USER1137;
+
+
+SQL> GRANT CREATE SESSION, RESOURCE, UULIMITED TABLESPACE TO USER1137;
+GRANT CREATE SESSION, RESOURCE, UULIMITED TABLESPACE TO USER1137
+                                *
+ERROR at line 1:
+ORA-00990: missing or invalid privilege
+
+
+SQL> GRANT CREATE SESSION, RESOURCE, UNLIMITED TABLESPACE TO USER1137;
+
+
+Grant succeeded.
+
+
+SQL> disc
+Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+SQL> connect USER1137@orclpdb
+Enter password:
+Connected.
+
+
+
+
+
+
+-----------------------------Task 2-------------------------
+
+
+
+
+
+
+CREATE TABLE Students(
+Student_ID INT,
+Name VARCHAR(50),
+Semester VARCHAR(10),
+No_of_course_taken INT,
+Department VARCHAR(50),
+constraint pk_Students PRIMARY KEY(Student_ID)
+);
+
+
+CREATE TABLE Department(
+Department_Code VARCHAR(10),
+Name VARCHAR(50),
+Head_of_dept VARCHAR(10),
+constraint pk_Department PRIMARY KEY(Department_Code)
+);
+
+
+
+
+CREATE TABLE Marksheet(
+Student_ID INT,
+Course VARCHAR(10),
+Grade VARCHAR(10)
+);
+
+
+
+
+
+
+
+
+-------------------------------Task 3--------------------------
+
+
+
+
+
+
+ALTER TABLE Marksheet
+ADD constraint fk_Department Foreign KEY(Student_ID) References Students(Student_ID);
+
+
+
+
+
+
+
+
+
+
+-----------------------------------Task 4---------------------------
+
+
+
+
+
+
+We cannot assign 'Student_ID' as the primary key of the Marksheet table. Because, the 'Student_ID' is not unique for all the entries which violates the condition of becoming primary key as a number of IDs repeat in the table.
+
+
+
+
+
+
+-----------------------------------Task 5---------------------------
+
+
+
+
+
+
+INSERT INTO Student (Student_ID,Name,No_of_course_taken,Department,Head_of_dept) INSERT INTO Student VALUES('150001', 'Sullivan', '3rd', 12, 'CEE', 'Lucifer');
+INSERT INTO Student VALUES('152206', 'Lazarus', 'Null', 8, 'EEE', 'Dryad');
+INSERT INTO Student VALUES('152208', 'Ishtar', '2nd', 9, 'EEE', 'Dryad');
+INSERT INTO Student VALUES('151110', 'Kaya', '1st', 5, 'MCE', 'Indriva');
+INSERT INTO Student VALUES('150020', 'Asmodeus', '7th', 31, 'CSE', 'Lucifer');
+
+
+
+
+
+
+INSERT INTO Marksheet VALUES('150005', 'DBMS', 'B');
+INSERT INTO Marksheet VALUES('150020', 'Data Structure', 'A-');
+INSERT INTO Marksheet VALUES('150005', 'Programming', 'B+');
+INSERT INTO Marksheet VALUES('150007', 'Sociology', 'A+');
+INSERT INTO Marksheet VALUES('150023', 'Programming', 'A');
+INSERT INTO Marksheet VALUES('150008', 'Discrete Math', 'C');
+
+
+
+
+SELECT Student_ID, Name, Course, Grade
+FROM Students
+NATURAL JOIN Marksheet;
+
+
+
+
+
+
+-----------------------Task 6-----------------------
+
+
+
+
+
+
+INSERT INTO Marksheet (Student_ID, Course, Grade)
+VALUES (150032, NULL, 'B');
+
+
+
+
+
+
+
+
+
+
+----------------------------Task 7----------------------
+
+
+DELETE FROM Department
+WHERE Name = 'ME';
